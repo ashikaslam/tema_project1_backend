@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Suggestion</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script>
+        function initAutocomplete() {
+            var input = document.getElementById('address');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                var location = {
+                    address: place.formatted_address,
+                    latitude: place.geometry.location.lat(),
+                    longitude: place.geometry.location.lng()
+                };
+                console.log(location);
+
+                // Here you can send the location object to your backend
+                // e.g., using fetch or AJAX
+                // fetch('/your-backend-endpoint', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify(location),
+                // })
+                // .then(response => response.json())
+                // .then(data => console.log('Success:', data))
+                // .catch((error) => console.error('Error:', error));
+            });
+        }
+    </script>
+</head>
+<body onload="initAutocomplete()">
+    <h1>Enter your address</h1>
+    <input id="address" type="text" placeholder="Enter your address" style="width: 300px; padding: 10px;" autocomplete="off"/>
+</body>
+</html>

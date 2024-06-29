@@ -1,0 +1,58 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+</head>
+<body>
+    <h2>Upload Image to ImageBB</h2>
+    <form id="upload-form">
+        <input type="file" id="file-input" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="output"></div>
+
+    <script >
+
+
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+        
+            let fileInput = document.getElementById('file-input');
+            let file = fileInput.files[0];
+            let formData = new FormData();
+            formData.append('image', file);
+        
+            // Replace 'YOUR_API_KEY' with your actual ImageBB API key
+            let apiKey = '8fd0dea37bef163ec5e52f7b7748398e';
+            let apiUrl = `https://api.imgbb.com/1/upload?key=${apiKey}`;
+        
+            fetch(apiUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    let imageUrl = data.data.url;
+                    document.getElementById('output').innerHTML = `<p>Image URL: <a href="${imageUrl}" target="_blank">${imageUrl}</a></p>`;
+                } else {
+                    document.getElementById('output').innerHTML = `<p>Failed to upload image</p>`;
+                }
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        });
+        
+
+
+
+    </script>
+</body>
+</html>
