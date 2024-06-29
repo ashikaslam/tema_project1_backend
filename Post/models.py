@@ -32,8 +32,19 @@ class Post(models.Model):
         self.total_comments = count_of_comments
         self.save()
     
+    def __lt__(self,others): #  will sort by demand
+        if self.created_at != others.created_at:return  self.created_at < others.created_at
+        if self.total_reactions != others.total_reactions:return  self.total_reactions > others.total_reactions
+        if self.total_comments != others.total_comments:return  self.total_comments > others.total_comments
+        if self.total_share != others.total_share:return  self.total_share > others.total_share
+        
+        
     class Meta:
-        ordering = ['-created_at','total_reactions','total_comments','total_share']
+        ordering = ['total_reactions','total_comments','total_share','-created_at']
+    
+    
+        
+
         
         
     

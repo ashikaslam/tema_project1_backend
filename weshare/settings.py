@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Post',
     'Comment',
     'Reaction',
+    'friendship',
     
     # exrat modules
     'rest_framework_simplejwt',
