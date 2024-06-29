@@ -91,3 +91,8 @@ class ResetPasswordRequestSerializer(serializers.Serializer):  # 6
 #
 class ResetPasswordSerializer(serializers.Serializer):  # 7
     new_password = serializers.CharField(write_only=True, required=True)
+    
+    
+
+class logoutSerializer(serializers.Serializer):  # 8
+    refresh_token = serializers.CharField(write_only=True, required=True)

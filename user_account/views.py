@@ -199,3 +199,23 @@ class ResetPassword(APIView): # 7
                 return Response({'error': 'No user found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+
+class Logout(APIView): # 8
+    authentication_classes=[JWTAuthentication,SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.logoutSerializer
+    def post(self, request):
+        logout(request) # this line for testing not for production
+        serializer  = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            try:
+                refresh_token  = serializer.validated_data['refresh_token']
+                RefreshToken(refresh_token).blacklist()
+                return Response(status=status.HTTP_200_OK)
+            except Exception as e:
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors)
