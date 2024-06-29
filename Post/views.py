@@ -43,8 +43,11 @@ class Post_view(APIView): # 1 # this view for creating a post
     
             
             
-            
-            
+
+from django.http import JsonResponse
+
+
+
 class Home_page(APIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
@@ -55,7 +58,8 @@ class Home_page(APIView):
         else:
             # Retrieve the first 50 posts
             posts = models.Post.objects.all()[:50]
-            return JsonResponse({'all_posts':list(posts)})
-            
+            # Serialize the queryset
+            serializer = serializers.PostSerializer_data_pass(posts, many=True)
+            return Response({'all_posts': serializer.data})
             
             

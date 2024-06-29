@@ -42,6 +42,9 @@ class Post(models.Model):
     class Meta:
         ordering = ['total_reactions','total_comments','total_share','-created_at']
     
+    def __str__(self) -> str:
+       return f"{self.id} {self.text} "
+    
     
         
 
