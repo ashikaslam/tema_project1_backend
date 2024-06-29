@@ -9,7 +9,7 @@ User = get_user_model()
 import json
 from django.core import serializers
 from django.http import JsonResponse
-from django.contrib.auth.models import User
+
 
 
 GENDER = [
@@ -42,11 +42,11 @@ class UserProfile(models.Model):
     
     # other relations
     
-    def get_friends(request):
-        user = request.user
-        initiated = user.friendships_initiated.filter(is_active=True).values_list('friend_two', flat=True)
-        received = user.friendships_received.filter(is_active=True).values_list('friend_one', flat=True)
-        friends_qs = User.objects.filter(id__in=list(initiated) + list(received))
+    # def get_friends(request):
+    #     user = request.user
+    #     initiated = user.friendships_initiated.filter(is_active=True).values_list('friend_two', flat=True)
+    #     received = user.friendships_received.filter(is_active=True).values_list('friend_one', flat=True)
+    #     friends_qs = User.objects.filter(id__in=list(initiated) + list(received))
     
         # friends_json = serializers.serialize('json', friends_qs, fields=('id')) # Add fields as needed
         
@@ -56,15 +56,6 @@ class UserProfile(models.Model):
         # # Extract the actual list of friends data
         # friends_list = [friend['fields'] for friend in friends_data]
         # return JsonResponse(friends_list, safe=False)
-    
-    
-
-
-
-
-
-   
-    
-    def __str__(self):
-        return self.user.username
+    # def __str__(self):
+    #     return self.user.username
 
