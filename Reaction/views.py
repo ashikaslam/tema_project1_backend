@@ -20,16 +20,12 @@ class ReactionCreateView(APIView):
         try:
             user = request.user
             profile = user.profile
-            if content_type == "Post.post": # if some one want to like of unlike a post
-                print(f"hello>> {user} {profile} {content_type} { object_id}")
+            if content_type == "post": # if some one want to like of unlike a post
                 current_post = Post.objects.get(id=object_id)
-                print(current_post, ">>")
                 post_content_type = ContentType.objects.get(
                     app_label='Post', model='post')
-                print(post_content_type)
                 reactions = Reaction.objects.filter(
                     content_type=post_content_type, object_id=object_id, owner_profile=profile).exists()
-                print(reactions)
                 if reactions:
                     reactions = Reaction.objects.get(
                         content_type=post_content_type, object_id=object_id, owner_profile=profile)
@@ -38,7 +34,6 @@ class ReactionCreateView(APIView):
                     current_post.save()
                     return Response(status=status.HTTP_202_ACCEPTED)
                 else:
-                    print("here>>")
                     reactions = Reaction.objects.create(
                         content_type=post_content_type, object_id=object_id, owner_profile=profile)
                     current_post.total_reactions += 1

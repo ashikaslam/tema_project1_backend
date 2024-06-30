@@ -5,6 +5,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 class Comment(models.Model):
+    # initial data
     owner_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='comments')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -12,6 +13,7 @@ class Comment(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     # static_info
     total_reactions = models.PositiveIntegerField(default=0)
     total_comments = models.PositiveIntegerField(default=0)
