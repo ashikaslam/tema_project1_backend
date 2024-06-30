@@ -26,4 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('user_account.urls')),
     path('post/', include('Post.urls')),
+    path('reaction/', include('Reaction.urls')),
+    path('user_profile/', include('user_profile.urls')),
 ]

@@ -23,6 +23,7 @@ from . import models
 
 
 
+
 class Post_view(APIView): # 1 # this view for creating a post 
     authentication_classes=[JWTAuthentication,SessionAuthentication]
     permission_classes = [IsAuthenticated]
@@ -44,22 +45,37 @@ class Post_view(APIView): # 1 # this view for creating a post
             
             
 
-from django.http import JsonResponse
 
 
 
-class Home_page(APIView):
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import SessionAuthentication
+from .models import Post
+from .serializers import PostSerializer
+
+from Reaction.models import Reaction
+     
+
+class HomePage(APIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            # Logic for authenticated users
-            pass
+           # Retrieve the first 50 posts
+            posts = models.Post.objects.all()[:50]
+            for i in posts:print(i.get_reactions())
+            # Serialize the queryset
+            serializer = serializers.PostSerializer_data_pass(posts, many=True)
+            return Response({'all_posts': serializer.data})
         else:
             # Retrieve the first 50 posts
             posts = models.Post.objects.all()[:50]
             # Serialize the queryset
             serializer = serializers.PostSerializer_data_pass(posts, many=True)
             return Response({'all_posts': serializer.data})
-            
-            
+
+
+          
