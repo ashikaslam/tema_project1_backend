@@ -1,15 +1,8 @@
-
-
-
-
-
-
-
-
 from django.urls import path
-from. import views
+from . import views
+
 urlpatterns = [
-  path('', views.Profile_data.as_view(), name='user_profile'),
- 
- 
+    
+    path('', views. myProfileSerializer.as_view(), name='my_profile'),
+    path('user_profile_data/<int:id>/', views.user_Profile_data.as_view(), name='user_profile_data'),
 ]
