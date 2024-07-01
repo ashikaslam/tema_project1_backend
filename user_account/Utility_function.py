@@ -28,7 +28,7 @@ def send_email(email,link):
 def send_link_for_pass_set(email,link):
     try:
         email_id = email
-        email_subject = "sub!!!"
+        email_subject = "Reste your password!!!"
         email_body = render_to_string('pass_set.html', {'link' : link})
         email = EmailMultiAlternatives(email_subject , '', to=[email_id])
         email.attach_alternative(email_body, "text/html")
@@ -47,9 +47,10 @@ def generate_otp():
    
 def send_otp_for_registration(email,otp):
     try:
+        otp = str(otp)
         email_id = email
-        email_subject ="Create your Id on WeShare!"
-        email_body = render_to_string('create_id.html', {'otp':otp})
+        email_subject ="Varify your email"
+        email_body = render_to_string('create_id.html', {'otp':otp,'otp1':otp[0],'otp2':otp[1],'otp3':otp[2],'otp4':otp[3],'otp5':otp[4],'otp6':otp[5]})
         email = EmailMultiAlternatives(email_subject , '', to=[email_id])
         email.attach_alternative(email_body, "text/html")
         email.send()

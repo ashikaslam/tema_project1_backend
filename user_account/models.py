@@ -63,7 +63,7 @@ class Email_varification(models.Model):
     
     def is_otp_valid(self):
         now = timezone.now()
-        return (now - self.created_at) < datetime.timedelta(minutes=5)
+        return (now - self.created_at) < datetime.timedelta(minutes=10)
     
     
 class PasswordReset(models.Model):
@@ -73,4 +73,4 @@ class PasswordReset(models.Model):
     
     def is_link_valid(self):
         now = timezone.now()
-        return (now - self.created_at) < datetime.timedelta(minutes=5)
+        return (now - self.created_at) < datetime.timedelta(minutes=10)
