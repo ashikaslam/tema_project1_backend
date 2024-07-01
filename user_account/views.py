@@ -87,7 +87,10 @@ class UserSignupView(APIView):  # 3
             Email_varification_obj = models.Email_varification.objects.filter(email=email).exists()
             if not Email_varification_obj:return Response({'error': "registration unsuccessful", "status": 0}, status=status.HTTP_400_BAD_REQUEST)
             user = serializer.save()  # This internally calls create() with validated data
-            return Response({"message": "registration successful", "status": 1}, status=status.HTTP_200_OK)
+            # jwt pass 
+            Refresh = RefreshToken.for_user(user)
+            login(request,user) # this line not for production just for testing
+            return Response({'message': 'Login successful.', 'user_id': user.id, "access": str(Refresh.access_token), 'refresh': str(Refresh)}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
