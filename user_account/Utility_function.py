@@ -10,21 +10,12 @@ from geopy.geocoders import Nominatim
 
 
 
-def send_email(email,link):
-    try:
-        email_id = email
-        email_subject = "sub!!!"
-        email_body = render_to_string('active_email.html', {'link' : link})
-        email = EmailMultiAlternatives(email_subject , '', to=[email_id])
-        email.attach_alternative(email_body, "text/html")
-        email.send()
-        return Response({"message":"successsfully email sent","status":1},status=status.HTTP_200_OK)
 
-    except Exception as  e:
-               print('here')
-               return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-# bellow codes are useing.......................
+     
+     
+     
+   
+# email sendgin functons .......................
 def send_link_for_pass_set(email,link):
     try:
         email_id = email
@@ -36,14 +27,7 @@ def send_link_for_pass_set(email,link):
         return True
     except Exception as  e:
         print(e)
-        return False
-           
-        
-     
-     
-def generate_otp():
-        """Generate a random 4-digit OTP."""
-        return random.randint(100000, 999999)   
+        return False 
    
 def send_otp_for_registration(email,otp):
     try:
@@ -58,6 +42,14 @@ def send_otp_for_registration(email,otp):
     except Exception as  e:
         print(e)
         return False
+
+
+# others  functions
+
+def generate_otp():
+        """Generate a random 4-digit OTP."""
+        return random.randint(100000, 999999)  
+
 
 def user_address_provider(Latitude , Longitude):
     # Initialize Nominatim API
@@ -75,3 +67,19 @@ def user_address_provider(Latitude , Longitude):
     return {'city':city,'state':state,'country':country }
 
 
+
+# unused functions....
+
+def send_email(email,link): 
+    try:
+        email_id = email
+        email_subject = "sub!!!"
+        email_body = render_to_string('active_email.html', {'link' : link})
+        email = EmailMultiAlternatives(email_subject , '', to=[email_id])
+        email.attach_alternative(email_body, "text/html")
+        email.send()
+        return Response({"message":"successsfully email sent","status":1},status=status.HTTP_200_OK)
+
+    except Exception as  e:
+               print('here')
+               return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

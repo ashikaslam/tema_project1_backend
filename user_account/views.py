@@ -14,7 +14,7 @@ from rest_framework.response import Response
 
 from .import serializers
 from . import models
-from . import Utility_function
+from  . import Utility_function
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login,logout
 User = get_user_model()

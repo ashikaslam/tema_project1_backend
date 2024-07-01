@@ -6,7 +6,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import status
-
+from friendship.models import Friendship
+from extra_fruction import problem_solver
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class Profile_data_1(APIView):  # small data
     def get(self, request, *args, **kwargs):
@@ -56,5 +59,23 @@ class Add_profile_pic_during_register(APIView):   # high
                 profile.profile_picture = profile_pic
                 profile.save()
                 return Response({"message": "profile pic added", "status": 1}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+        
+        
+        
+class get_frends_of_a_user(APIView):   # this is the viwe to see friend of a user
+    def get(self,request, user_id,*args, **kwargs):
+        try:
+            if not User.objects.filter(id=user_id).exists():return Response({'error':"unkown error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            user=User.objects.get(id=user_id)
+            profile =user.profile
+            all_friendship_obj_arr_1 =   profile.friendships_initiated.filter(is_active=True)
+            all_friendship_obj_arr_2 =   profile.friendships_received.filter(is_active=True)
+            fnd_list = problem_solver.frind_list(all_friendship_obj_arr_1,all_friendship_obj_arr_2)
+            print(fnd_list)
+            return Response({"fnd_list": fnd_list, "status": 1}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

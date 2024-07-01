@@ -11,6 +11,10 @@ class Friendship(models.Model):
     request_date = models.DateTimeField(auto_now_add=True)
     accepted_date = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
+    
+    class Meta:
+        unique_together = ('friend_one', 'friend_two')
+        ordering = ['-request_date']
     def __str__(self):
         return f"{self.friend_one} -> {self.friend_two}"
 
