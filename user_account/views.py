@@ -83,6 +83,9 @@ class UserSignupView(APIView):  # 3
         try:
             serializer = self.serializer_class(data=request.data)
             serializer.is_valid(raise_exception=True)
+            email = serializer.validated_data['email']
+            Email_varification_obj = models.Email_varification.objects.filter(email=email).exists()
+            if not Email_varification_obj:return Response({'error': "registration unsuccessful", "status": 0}, status=status.HTTP_400_BAD_REQUEST)
             user = serializer.save()  # This internally calls create() with validated data
             return Response({"message": "registration successful", "status": 1}, status=status.HTTP_200_OK)
         except Exception as e:

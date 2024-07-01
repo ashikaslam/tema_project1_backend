@@ -43,3 +43,9 @@ class myProfileSerializer(serializers.ModelSerializer): # this is for the profil
     def get_email(self, obj):
         return obj.user.email
     
+    
+class addProfilePicSerializer_during_register(serializers.Serializer): 
+    profile_pic = serializers.URLField(required=True)
+    
+    
+    
