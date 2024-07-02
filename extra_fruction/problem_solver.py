@@ -1,4 +1,5 @@
-
+import secrets
+import string
 
 def frind_list(arr1, arr2):
    
@@ -27,3 +28,11 @@ def frind_list(arr1, arr2):
     # Sort the list of dictionaries by the "name" key
     ar_sorted = sorted(frd_list, key=lambda x: x["name"])
     return ar_sorted
+
+
+
+
+
+def generate_token(length=30):
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(length))

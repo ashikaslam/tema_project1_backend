@@ -56,9 +56,14 @@ class User(AbstractUser):
 # security >>>>>>>>code
 
 
+
+
+
 class Email_varification(models.Model):
     email = models.EmailField()
     otp =models.IntegerField()
+    token1=models.CharField( max_length=30)
+    token2=models.CharField( max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def is_otp_valid(self):

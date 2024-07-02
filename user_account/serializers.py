@@ -16,10 +16,11 @@ GENDER = [
 class email_taker(serializers.Serializer):  # 1
     email = serializers.EmailField()
 
-
 class otp_taker(serializers.Serializer):  # 2
     email = serializers.EmailField()
     otp = serializers.IntegerField()
+    token1 =serializers.CharField()
+    token2 =serializers.CharField()
 
 
 class UserSerializer(serializers.ModelSerializer):  # 3

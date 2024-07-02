@@ -11,6 +11,7 @@ from extra_fruction import problem_solver
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+
 class Profile_data_1(APIView):  # small data
     def get(self, request, *args, **kwargs):
         posts = models.UserProfile.objects.all()[:50]
@@ -61,8 +62,3 @@ class Add_profile_pic_during_register(APIView):   # high
                 return Response({"message": "profile pic added", "status": 1}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        
-        
-        
-        
