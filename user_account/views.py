@@ -85,10 +85,10 @@ class UserSignupView(APIView):  # 3
     def post(self, request):
         try:
             serializer = self.serializer_class(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            email = serializer.validated_data['email']
+            email = request.data['email']
             if User.objects.filter(email=email, is_active=False).exists():
                 User.objects.get(email=email, is_active=False).delete()
+            serializer.is_valid(raise_exception=True)
             user = serializer.save()  # This internally calls create() with validated data
             user.is_active=False
             user.save()

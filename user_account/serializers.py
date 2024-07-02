@@ -46,6 +46,7 @@ class UserSerializer(serializers.ModelSerializer):  # 3
         profile_picture = validated_data.pop('profile_picture', None)
         gender = validated_data.pop('gender', None)
         # Create the user instance
+        
         user = User.objects.create_user(**validated_data)
         current_profile = UserProfile.objects.create(
             user=user, date_of_birth=date_of_birth, gender=gender)
