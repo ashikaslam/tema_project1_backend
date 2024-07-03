@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Location</title>
+    <script>
+        function showAlertAndRequestLocation() {
+            if (confirm("For better performance, we need to access your location. Do you allow it?")) {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            console.log("Latitude: " + position.coords.latitude);
+                            console.log("Longitude: " + position.coords.longitude);
+                        },
+                        (error) => {
+                            console.error("Error Code = " + error.code + " - " + error.message);
+                        }
+                    );
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+            } else {
+                alert("Location access denied by the user.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="showAlertAndRequestLocation()">Get Location</button>
+</body>
+</html>

@@ -102,14 +102,15 @@ class UserSignupView(APIView):  # 3
             # if the email is valid>>
             token1 = problem_solver.generate_token()
             token2 = problem_solver.generate_token()
+            email = serializer.validated_data['email']
             Email_varification_obj = models.Email_varification.objects.create(
                 email=email, otp=otp, token1=token1, token2=token2
 
             )
             # .........................X.............
             return Response({'message': 'go for the otp check',
-                             'email': email, 'token1': token1, 'token2': token2
-                             
+                             'email': email, 'token1': token1, 'token2': token2,
+                             "status": 1
                              }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -134,9 +135,17 @@ class Varifi_otp_(APIView):  # 2
                 user.is_active = True
                 user.save()
                 Refresh = RefreshToken.for_user(user)
+                profile=user.profile
                 # this line not for production just for testing
                 login(request,  user)
-                return Response({'message': 'registration successful.', 'user_id':  user.id, "access": str(Refresh.access_token), 'refresh': str(Refresh)}, status=status.HTTP_200_OK)
+                return Response({'message': 'registration successful.', 
+                                 'user_id':  user.id, 
+                                 "profile_id":profile.id,
+                                 "profile_picture": profile.profile_picture,
+                                 "access": str(Refresh.access_token), 
+                                 "status": 1,
+                                 'refresh': str(Refresh)
+                                 }, status=status.HTTP_200_OK)
 
             else:
                 return Response({"error": "otp is invalied", "status": 0}, status=status.HTTP_400_BAD_REQUEST)
